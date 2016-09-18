@@ -12,6 +12,25 @@ io.on('connection', function(socket){
     });
 });
 
+var MysqlEvents = require('mysql-events');
+var dsn = {
+    host: 'localhost',
+    user: 'root',
+    password: ''
+}
+var MysqlEventWatcher = MysqlEvents(dsn);
+
+var watcher = MysqlEventWatcher.add('realtime_chart.chart_data.value', function(oldRow, newRow) {
+    if(oldRow === null) {
+        console.log(oldRow);
+    }
+
+    if(oldRow !== null && newRow !== null) {
+        console.log(oldRow);
+        console.log(newRow);
+    }
+});
+
 server.listen(PORT, function() {
 	console.log('Server is running on port ' + PORT + '...');
 });
