@@ -20,9 +20,9 @@ var dsn = {
 }
 var MysqlEventWatcher = MysqlEvents(dsn);
 
-var watcher = MysqlEventWatcher.add('realtime_chart.chart_data.value', function(oldRow, newRow) {
+var watcher = MysqlEventWatcher.add('realtime_chart.chart_data', function(oldRow, newRow) {
     if(oldRow === null) {
-        console.log(oldRow);
+        console.log(newRow);
     }
 
     if(oldRow !== null && newRow !== null) {
