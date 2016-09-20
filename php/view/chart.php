@@ -73,6 +73,7 @@
 
             function newData(newVal) {
                 interactive_plot.setData([fetchNewData(newVal)]);
+                interactive_plot.getOptions().yaxes[0].max = Math.max.apply(Math, data);
                 interactive_plot.setupGrid();    // Update grid
                 interactive_plot.draw();
             }
