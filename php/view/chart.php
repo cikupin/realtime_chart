@@ -40,11 +40,11 @@
                     tickColor: "#f3f3f3"
                 },
                 series: {
-                    shadowSize: 0, // Drawing is faster without shadows
+                    shadowSize: 0,
                     color: "#3c8dbc"
                 },
                 lines: {
-                    fill: true, //Converts the line chart to area chart
+                    fill: true,
                     color: "#3c8dbc"
                 },
                 yaxis: {
@@ -57,20 +57,10 @@
                 }
             });
 
-            /************************* new data ******************************/
-            function fetchNewData() {
-                data = data.slice(10);
-
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(50000000);
+            /************************* insert new data ******************************/
+            function fetchNewData(newVal) {
+                data = data.slice(1);
+                data.push(newVal);
 
                 // Zip the generated y values with the x values
                 var res = [];
@@ -79,154 +69,18 @@
                 }
 
                 return res;
-
             }
 
-            var update_plot = $.plot("#interactive", [], {
-                grid: {
-                    borderColor: "#f3f3f3",
-                    borderWidth: 1,
-                    tickColor: "#f3f3f3"
-                },
-                series: {
-                    shadowSize: 0, // Drawing is faster without shadows
-                    color: "#3c8dbc"
-                },
-                lines: {
-                    fill: true, //Converts the line chart to area chart
-                    color: "#3c8dbc"
-                },
-                yaxis: {
-                    min: 0,
-                    max: Math.max.apply(Math, data),
-                    show: true
-                },
-                xaxis: {
-                    show: true
-                }
+            function newData(newVal) {
+                interactive_plot.setData([fetchNewData(newVal)]);
+                interactive_plot.setupGrid();    // Update grid
+                interactive_plot.draw();
+            }
+
+            socket.on('new_data', function(msg) {
+                newData(msg);
             });
-
-            function newData() {
-                update_plot.setData([fetchNewData()]);
-                update_plot.setupGrid();    // Update grid
-                update_plot.draw();
-            }
-            newData();
-            /*******************************************************/
-
-            /***************** new data 2 **************************/
-            function fetchNewData2() {
-                data = data.slice(10);
-
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(100000000);
-
-                // Zip the generated y values with the x values
-                var res = [];
-                for (var i = 0; i < data.length; ++i) {
-                    res.push([i, data[i]]);
-                }
-
-                return res;
-
-            }
-
-            var update_plot = $.plot("#interactive", [], {
-                grid: {
-                    borderColor: "#f3f3f3",
-                    borderWidth: 1,
-                    tickColor: "#f3f3f3"
-                },
-                series: {
-                    shadowSize: 0, // Drawing is faster without shadows
-                    color: "#3c8dbc"
-                },
-                lines: {
-                    fill: true, //Converts the line chart to area chart
-                    color: "#3c8dbc"
-                },
-                yaxis: {
-                    min: 0,
-                    max: Math.max.apply(Math, data),
-                    show: true
-                },
-                xaxis: {
-                    show: true
-                }
-            });
-
-            function newData2() {
-                update_plot.setData([fetchNewData2()]);
-                update_plot.setupGrid();    // Update grid
-                update_plot.draw();
-            }
-            newData2();
-            /*******************************************************/
-
-            /*********************** new data 3 ********************************/
-            function fetchNewData3() {
-                data = data.slice(10);
-
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(9999999);
-                data.push(40000000);
-
-                // Zip the generated y values with the x values
-                var res = [];
-                for (var i = 0; i < data.length; ++i) {
-                    res.push([i, data[i]]);
-                }
-
-                return res;
-
-            }
-
-            var update_plot = $.plot("#interactive", [], {
-                grid: {
-                    borderColor: "#f3f3f3",
-                    borderWidth: 1,
-                    tickColor: "#f3f3f3"
-                },
-                series: {
-                    shadowSize: 0, // Drawing is faster without shadows
-                    color: "#3c8dbc"
-                },
-                lines: {
-                    fill: true, //Converts the line chart to area chart
-                    color: "#3c8dbc"
-                },
-                yaxis: {
-                    min: 0,
-                    max: Math.max.apply(Math, data),
-                    show: true
-                },
-                xaxis: {
-                    show: true
-                }
-            });
-
-            function newData3() {
-                update_plot.setData([fetchNewData3()]);
-                update_plot.setupGrid();    // Update grid
-                update_plot.draw();
-            }
-            newData3();
-            /*******************************************************/
+            /***********************************************************************/
          });
     </script>
 </body>

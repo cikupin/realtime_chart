@@ -4,14 +4,7 @@ var http = require('http'),
 var server = http.createServer(function(req, res) {});
 var io = require('socket.io').listen(server);
 
-io.on('connection', function(socket){
-    console.log('a user is connected');
-
-    socket.on('disconnect', function() {
-        console.log('a user is disconnected')
-    });
-});
-
+// Define MySQL listener
 var MysqlEvents = require('mysql-events');
 var dsn = {
     host: 'localhost',
@@ -20,14 +13,10 @@ var dsn = {
 }
 var MysqlEventWatcher = MysqlEvents(dsn);
 
+// Set watcher to database
 var watcher = MysqlEventWatcher.add('realtime_chart.chart_data', function(oldRow, newRow) {
     if(oldRow === null) {
-        console.log(newRow);
-    }
-
-    if(oldRow !== null && newRow !== null) {
-        console.log(oldRow);
-        console.log(newRow);
+        io.emit('new_data', newRow.fields.value);
     }
 });
 
