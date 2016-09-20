@@ -40,4 +40,4 @@ Copy **php/** directory to you htdocs directory. After PHP & MariaDB service ran
 
 Just insert new data to **realtime_chart.chart_data** table in your database and it will be appeared in the chart automatically without refreshing the web page.
 
-# Have Fun!
+#### Have Fun!
